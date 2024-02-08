@@ -1,6 +1,8 @@
 from . import serializer
 from rest_framework import generics, permissions, pagination, viewsets
 from . import models
+
+from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
@@ -85,29 +87,40 @@ def customer_register(request):
     mobile = request.POST.get('mobile')
     username = request.POST.get('username')
     password = request.POST.get('password')
-    
-    user = User.objects.create(
-        first_name = first_name,
-        last_name = last_name,
-        email = email,
-        mobile = mobile,
-        username = username,
-        password = password,
-    )
-    if user:
-        customer = models.Customer.objects.create(
-            user = user,
-            moblie = mobile,
+    try:
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            email = email,
+            mobile = mobile,
+            username = username,
+            password = password,
         )
+        if user:
+            try:
+                customer = models.Customer.objects.create(
+                    user = user,
+                    moblie = mobile,
+                )
+                msg = {
+                    'bool':True,
+                    'user':user.id,
+                    'customer':customer.id,
+                    'msg':'thank you for your registration. You can log in now'
+                }
+            except IntegrityError:
+                msg = {
+                'bool':False,
+                'msg':'Phone number already exist'
+            }  
+        else:
+            msg = {
+                'bool':False,
+                'msg':'Ops... something went wrong'
+            }  
+    except IntegrityError:
         msg = {
-            'bool':True,
-            'user':user.id,
-            'customer':customer.id,
-            'msg':'thank you for your registration. You can log in now'
-        }
-    else:
-        msg = {
-            'bool':False,
-            'msg':'Ops... something went wrong'
-        }  
+                'bool':False,
+                'msg':'This username is already created',
+            }  
     return JsonResponse(msg)

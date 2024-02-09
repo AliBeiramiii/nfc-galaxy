@@ -113,7 +113,9 @@ const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
             </li>
           </ul>
           <button className="flex justify-center border border-black rounded-3xl h-[48px] w-[174px] items-center mt-2 hover:bg-gray-100 hover:mt-[6px] hover:mb-[10px]">
-                <div className="">ورود / عضویت</div>
+                <div className="">
+                <NavLink to="/login">ورود/عضویت</NavLink>
+                </div>
           </button>
         </div>
       </div>

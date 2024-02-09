@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import Products from './pages/Products'
+import Login from './pages/Login'
 import PurchaseSteps from './pages/PurchaseSteps'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="shop" element={<Products/>}/>
         <Route path="about-us" element={<AboutUs/>}/>
         <Route path="contact-us" element={<ContactUs/>}/>
+        <Route path="login" element={<Login/>}/>
         <Route path="product-purchase-steps" element={<PurchaseSteps/>}/>
       </Route>
     </Routes>

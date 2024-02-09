@@ -23,7 +23,7 @@ const Register: React.FC = () => {
     e.preventDefault();
     
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/customer/login/', formData);
+      const response = await axios.post('http://127.0.0.1:8000/api/customer/register/', formData);
       console.log(response.data); // Log the response from the API
       // Optionally, you can redirect the user to a success page or perform other actions based on the API response
     } catch (error) {

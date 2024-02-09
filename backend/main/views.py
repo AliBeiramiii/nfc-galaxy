@@ -81,10 +81,10 @@ def customer_login(request):
 
 @csrf_exempt
 def customer_register(request):
-    first_name = request.POST.get('first_name')
-    last_name = request.POST.get('last_name')
+    first_name = request.POST.get('firstName')
+    last_name = request.POST.get('lastName')
+    mobile = request.POST.get('mobileNumber')
     email = request.POST.get('email')
-    mobile = request.POST.get('mobile')
     username = request.POST.get('username')
     password = request.POST.get('password')
     try:
@@ -92,7 +92,6 @@ def customer_register(request):
             first_name = first_name,
             last_name = last_name,
             email = email,
-            mobile = mobile,
             username = username,
             password = password,
         )

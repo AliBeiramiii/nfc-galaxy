@@ -4,14 +4,18 @@ import axios from 'axios';
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const formdata = new FormData();
+  formdata.append('username', username);
+  formdata.append('password', password);
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/customer/login/', {
-        username,
-        password,
-      });
-      console.log(response.data);
+      const response = await axios.post('http://127.0.0.1:8000/api/customer/login/',
+        formdata
+      );
+      console.log(username);
+      // if (response.)
     } catch (error) {
       console.error(error);
     }

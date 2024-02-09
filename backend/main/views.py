@@ -74,6 +74,8 @@ def customer_login(request):
     else:
         msg = {
             'bool':False,
+            'test':request.POST,
+            'test2':password,
             'msg':'Invalid Username/Password!!'
         }  
     return JsonResponse(msg)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Login: React.FC = () => {
@@ -14,8 +15,6 @@ const Login: React.FC = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/customer/login/',
         formdata
       );
-      console.log(username);
-      // if (response.)
     } catch (error) {
       console.error(error);
     }
@@ -37,6 +36,8 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+
+      <p><Link to="/register">If you don't have an account, click here</Link> to register.</p>
     </div>
   );
 };

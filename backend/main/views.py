@@ -122,4 +122,5 @@ def customer_register(request):
                 'bool':False,
                 'msg':'This username is already created',
             }  
+        
     return JsonResponse(msg)

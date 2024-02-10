@@ -83,12 +83,12 @@ def customer_login(request):
 def customer_register(request):
     first_name = request.POST.get('firstName')
     last_name = request.POST.get('lastName')
-    mobile = request.POST.get('mobileNumber')
     email = request.POST.get('email')
     username = request.POST.get('username')
     password = request.POST.get('password')
+    mobile = request.POST.get('mobileNumber')
     try:
-        user = User.objects.create(
+        user = User.objects.create_user(
             first_name = first_name,
             last_name = last_name,
             email = email,
@@ -99,7 +99,7 @@ def customer_register(request):
             try:
                 customer = models.Customer.objects.create(
                     user = user,
-                    moblie = mobile,
+                    mobile = mobile
                 )
                 msg = {
                     'bool':True,
@@ -120,6 +120,7 @@ def customer_register(request):
     except IntegrityError:
         msg = {
                 'bool':False,
+                'test':f'{user.first_name} {user.last_name}',
                 'msg':'This username is already created',
             }  
         

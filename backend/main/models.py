@@ -34,6 +34,23 @@ class Customer(models.Model):
         return self.user.username
     
 
+# class Portfolio(models.Model):
+#     first_name_eng = models.CharField(max_length=200)
+#     last_name_eng = models.CharField(max_length=200)
+#     company_name = models.CharField(max_length=200)
+#     mobile_portfolio = models.PositiveBigIntegerField()
+#     website_link = models.TextField()
+#     instagram_id= models.TextField()
+#     telegram_id = models.TextField()
+#     x_id = models.TextField()
+#     card_number = models.PositiveBigIntegerField()
+#     sheba_number = models.PositiveBigIntegerField()
+#     address_portfolio = models.TextField()
+#     image_portfolio = models.ImageField(upload_to="portfolio-picture")
+#     CV_portfolio = models.FileField(upload_to="cv-portfolio")
+#     location = models.TextField()
+    
+    
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add = True)

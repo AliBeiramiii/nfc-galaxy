@@ -9,6 +9,7 @@ import ContactUs from './pages/ContactUs'
 import Products from './pages/Products'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Dashboard from './pages/DashBoard'
 import PurchaseSteps from './pages/PurchaseSteps'
 
 function App() {

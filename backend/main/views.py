@@ -78,7 +78,6 @@ def customer_login(request):
         }  
     return JsonResponse(msg)
 
-
 @csrf_exempt
 def customer_register(request):
     first_name = request.POST.get('firstName')
@@ -120,7 +119,6 @@ def customer_register(request):
     except IntegrityError:
         msg = {
                 'bool':False,
-                'test':f'{user.first_name} {user.last_name}',
                 'msg':'This username is already created',
             }  
         

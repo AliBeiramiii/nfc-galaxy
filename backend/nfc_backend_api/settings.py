@@ -64,7 +64,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'nfc_backend_api.urls'
@@ -96,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER':'postgres',
-        'PASSWORD':'Matin1383',
+        'PASSWORD':'root',
         'HOST':'localhost',
         
     }
@@ -165,3 +165,4 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
+

@@ -1,12 +1,17 @@
+import logging
 from . import serializer
 from rest_framework import generics, permissions, pagination, viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from . import models
 
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+import jwt , datetime
+
 
 class VendorList(generics.ListCreateAPIView):
     queryset = models.Vendor.objects.all()
@@ -60,24 +65,68 @@ class CustomerAddressViewSet(viewsets.ModelViewSet):
     serializer_class = serializer.CustomerAddressSerializers
     queryset = models.CustomerAdddress.objects.all()
 
+# @api_view(('POST',))
+# @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 
 @csrf_exempt
 def customer_login(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+    username = request.POST.get("username")
+    password = request.POST.get("password")
     user = authenticate(username=username, password=password)
+    
     if user:
-        msg = {
-            'bool':True,
-            'user':user.username
+        
+        payload ={
+            'id':user.id,
+            'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'iat': datetime.datetime.utcnow()
         }
+        
+        token = jwt.encode(payload, 'secret', algorithm='HS256')
+        
+        data = {
+            'bool':True,
+            'token':token,
+        }
+        msg = JsonResponse(data)
+        msg.set_cookie(key='jwt', value=token, httponly=True)
     else:
-        msg = {
+        data = {
             'bool':False,
+            'test':username,
             'msg':'نام کاربری یا رمز عبور اشتباه است.'
         }  
-    return JsonResponse(msg)
+        msg = JsonResponse(data=data)
+    logging.debug(msg)
+    return msg
+    # username = request.POST.get("username")
+    # password = request.POST.get("password")
+    # user = authenticate(username=username, password=password)
+    # if user:
+    #     msg = {
+    #         'bool':True,
+    #         'user':user.username
+    #     }
+    # else:
+    #     msg = {
+    #         'bool':False,
+    #         'test':username,
+    #         'test2':password,
+    #         'msg':'نام کاربری یا رمز عبور اشتباه است.'
+    #     }  
+    # return JsonResponse(msg)
 
+# class LoginView(APIView):
+#     @csrf_exempt
+#     def post(request):
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         return Response({
+#             'message':'hi'
+#         })
+        
+        
+        
 @csrf_exempt
 def customer_register(request):
     first_name = request.POST.get('firstName')

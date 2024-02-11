@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Navbar from "../../components/Navbar";
 import blackCard1 from "../../assets/BlackNfcCard1.png";
 import { GrList } from "react-icons/gr";
@@ -10,9 +10,11 @@ import RedNfcCards1 from "../../assets/RedNfcCards1.png";
 import BlueNfcCards1 from "../../assets/BlueNfcCards1.png";
 import ImageGallery from "react-image-gallery";
 import Footer from "../../components/Footer";
+import AuthContext, { useAuth } from "../../context-Api/AuthProvider";
 
 const HomePage: React.FC = () => {
   const imgRef = useRef<ImageGallery>(null);
+  const {authData, setAuthData} = useAuth();
   const images = [
     {
       original: BlackNfcCards1,
@@ -88,7 +90,7 @@ const HomePage: React.FC = () => {
       >
         <ul className="flex flex-col gap-16 justify-center basis-1/3">
           <li className="flex self-end gap-3 text-white font-normal text-xl">
-            <span>کیفیت</span>
+            <span>{authData.user}</span>
             <div className="mt-1">
               <FaCircle size={20} />
             </div>

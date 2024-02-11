@@ -1,24 +1,39 @@
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
+// Define the type for the authentication context
 interface AuthContextType {
-  auth: any; // Replace 'any' with the actual type of auth object
-  setAuth: React.Dispatch<React.SetStateAction<any>>; // Replace 'any' with the actual type of auth object
+  authData: { user: string; pass: string };
+  setAuthData: React.Dispatch<React.SetStateAction<{ user: string; pass: string }>>;
 }
 
-const AuthContext = createContext<AuthContextType>({ auth: {}, setAuth: () => {} });
+// Create the authentication context
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Custom hook to access the authentication context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+// Define the type for the props of AuthProvider
 interface AuthProviderProps {
-  children: ReactNode;
+  children: React.ReactNode; // Define children prop here
 }
 
+// Create the AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const [authData, setAuthData] = useState({ user: '', pass: '' });
 
-  return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  // Value to be provided by the context
+  const authContextValue: AuthContextType = {
+    authData,
+    setAuthData,
+  };
+
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

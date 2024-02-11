@@ -22,10 +22,10 @@ function App() {
         <Route path="shop" element={<Products/>}/>
         <Route path="about-us" element={<AboutUs/>}/>
         <Route path="contact-us" element={<ContactUs/>}/>
-        <Route path="login" element={<Login/>}/>
-        <Route path="register" element={<Register/>}/>
         <Route path="product-purchase-steps" element={<PurchaseSteps/>}/>
       </Route>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
     </Routes>
     </BrowserRouter>
     </>

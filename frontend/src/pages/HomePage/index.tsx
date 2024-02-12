@@ -108,7 +108,7 @@ const HomePage: React.FC = () => {
             </div>
           </li>
         </ul>
-        <div className="flex flex-col justify-center basis-1/3">
+        <div className="flex flex-col justify-center basis-1/3 focus:outline-none">
           <ImageGallery
             items={images}
             showPlayButton={false}
@@ -122,7 +122,7 @@ const HomePage: React.FC = () => {
                 <img
                   src={item.original}
                   alt={item.originalAlt}
-                  className="object-contain max-w-[400px] w-full"
+                  className="object-contain max-w-[400px] w-full focus:outline-none"
                 />
               </div>
             )}

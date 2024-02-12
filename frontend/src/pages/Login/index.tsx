@@ -1,8 +1,11 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../context-Api/AuthProvider";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { RxCross1 } from "react-icons/rx";
+
+//fix regex for login
 
 const Login: React.FC = () => {
   const { setAuthData } = useAuth();
@@ -55,6 +58,12 @@ const Login: React.FC = () => {
   };
 
   return (
+    <>
+    <button className="flex justify-start absolute m-10">
+      <NavLink to="/">
+      <RxCross1 size={30} color="red"/>
+      </NavLink>
+    </button>
     <div className=" bg-white h-screen flex items-center justify-center">
       {success ? (
         <div className="flex flex-col gap-12">
@@ -132,11 +141,16 @@ const Login: React.FC = () => {
               </div>
               <span>ادامه</span>
             </button>
+            <div className="flex justify-start gap-1">
+              <div className="text-xl text-gray-500 font-semibold">آیا هنوز عضو نیستید؟</div>
+              <NavLink to="/register" className="text-xl text-gray-900 font-semibold">اکنون عضو شوید</NavLink>
+            </div>
           </div>
         </form>
         </>
       )}
     </div>
+    </>
   );
 };
 

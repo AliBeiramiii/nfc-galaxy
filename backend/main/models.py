@@ -29,7 +29,9 @@ class Product(models.Model):
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    mobile = models.PositiveBigIntegerField()
+    mobile = models.PositiveBigIntegerField(unique=True)
+    email = models.EmailField(max_length = 254, default='example@example.com', unique=True)
+
     def __str__(self):
         return self.user.username
     

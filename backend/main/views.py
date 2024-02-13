@@ -145,7 +145,6 @@ def customer_register(request):
         user = User.objects.create_user(
             first_name = first_name,
             last_name = last_name,
-            email = email,
             username = username,
             password = password,
         )
@@ -160,7 +159,8 @@ def customer_register(request):
             try:
                 customer = models.Customer.objects.create(
                     user = user,
-                    mobile = mobile
+                    mobile = mobile,
+                    email  = email
                 )
                 msg = {
                     'bool':True,
@@ -169,10 +169,11 @@ def customer_register(request):
                     'msg':'thank you for your registration. You can log in now'
                 }
             except IntegrityError:
+                user.delete()
                 msg = {
                 'bool':False,
-                'msg':'Phone number already exist'
-            }  
+                'msg':'Phone number or email number already exist'
+            }
         else:
             msg = {
                 'bool':False,

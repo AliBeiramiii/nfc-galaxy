@@ -8,6 +8,7 @@ import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import Products from './pages/Products'
 import Login from './pages/Login'
+import ResetUserInformation from './pages/ChangeInfo'
 import Register from './pages/Register'
 import Dashboard from './pages/DashBoard'
 import PurchaseSteps from './pages/PurchaseSteps'
@@ -26,6 +27,7 @@ function App() {
         <Route path="product-purchase-steps" element={<PurchaseSteps/>}/>
       </Route>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/editing-information" element={<ResetUserInformation/>}/>
         <Route path="/register" element={<Register/>}/>
     </Routes>
     </BrowserRouter>

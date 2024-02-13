@@ -11,6 +11,7 @@ from django.http import JsonResponse, response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import jwt , datetime
+import re
 
 
 class VendorList(generics.ListCreateAPIView):
@@ -72,6 +73,11 @@ class CustomerAddressViewSet(viewsets.ModelViewSet):
 def customer_login(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
+    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+            return JsonResponse({'error': 'Invalid username format'}, status=400)
+    if not re.match(r'^[a-zA-Z0-9_]+$', password) :
+            return JsonResponse({'error': 'Invalid password format'}, status=400)
+    
     user = authenticate(username=username, password=password)
     
     if user:
@@ -172,3 +178,39 @@ def customer_register(request):
             }  
         
     return JsonResponse(msg)
+
+
+@csrf_exempt
+def customer_login(request):
+    username = request.POST.get("username")
+    email = request.POST.get("email")
+    first_name = request.POST.get("first_name")
+    last_name = request.POST.get("last_name")
+    mobile = request.POST.get("mobile")
+    user = authenticate(username=username)
+    
+    if user:
+        
+        payload ={
+            'id':user.id,
+            'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'iat': datetime.datetime.utcnow()
+        }
+        
+        token = jwt.encode(payload, 'secret', algorithm='HS256')
+        
+        data = {
+            'bool':True,
+            'token':token,
+        }
+        msg = JsonResponse(data)
+        msg.set_cookie(key='jwt', value=token, httponly=True)
+    else:
+        data = {
+            'bool':False,
+            'test':username,
+            'msg':'نام کاربری یا رمز عبور اشتباه است.'
+        }  
+        msg = JsonResponse(data=data)
+    logging.debug(msg)
+    return msg

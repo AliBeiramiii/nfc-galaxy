@@ -18,8 +18,10 @@ urlpatterns = [
     
     path('customer/login/',views.customer_login, name='customer_login'),
     path('customer/register/',views.customer_register, name='customer_register'),
+    path('customer/change-info/',views.)
     
     path('orders/',views.OrderList.as_view()),
     path('order-detail/<int:pk>',views.OrderDetail.as_view()),
+    
 ]
 urlpatterns += router.urls

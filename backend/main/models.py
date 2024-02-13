@@ -36,22 +36,25 @@ class Customer(models.Model):
         return self.user.username
     
 
-# class Portfolio(models.Model):
-#     first_name_eng = models.CharField(max_length=200)
-#     last_name_eng = models.CharField(max_length=200)
-#     company_name = models.CharField(max_length=200)
-#     mobile_portfolio = models.PositiveBigIntegerField()
-#     website_link = models.TextField()
-#     instagram_id= models.TextField()
-#     telegram_id = models.TextField()
-#     x_id = models.TextField()
-#     card_number = models.PositiveBigIntegerField()
-#     sheba_number = models.PositiveBigIntegerField()
-#     address_portfolio = models.TextField()
-#     image_portfolio = models.ImageField(upload_to="portfolio-picture")
-#     CV_portfolio = models.FileField(upload_to="cv-portfolio")
-#     location = models.TextField()
-    
+class Portfolio(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,null=True, default=None)
+    first_name_eng = models.CharField(max_length=200)
+    last_name_eng = models.CharField(max_length=200)
+    company_name = models.CharField(max_length=200,default='',blank=True)
+    mobile_number_portfolio = models.PositiveBigIntegerField(null=True,blank=True)
+    website_link = models.CharField(max_length=200,default='',blank=True)
+    instagram_id= models.CharField(max_length=200,default='',blank=True)
+    telegram_id = models.CharField(max_length=200,default='',blank=True)
+    x_id = models.CharField(max_length=200,default='',blank=True)
+    card_number = models.PositiveBigIntegerField(null=True,blank=True)
+    sheba_number = models.PositiveBigIntegerField(null=True,blank=True)
+    address_portfolio = models.TextField(default='',blank=True)
+    image_portfolio = models.ImageField(upload_to="portfolio-picture",null=True,blank=True)
+    CV_portfolio = models.FileField(upload_to="cv-portfolio",null=True,blank=True)
+    location_link = models.TextField(default='',blank=True)
+    card_NO = models.IntegerField(null=True)
+    portfolio_views = models.IntegerField(null=True)
+
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

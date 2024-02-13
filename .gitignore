@@ -314,6 +314,8 @@ cython_debug/
 .history
 .ionide
 
+# backend/main/migrations/
+
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pythonvanilla,visualstudiocode,pydev,pycharm

@@ -100,5 +100,8 @@ class CustomerAddressSerializers(serializers.ModelSerializer):
         # self.Meta.depth = 1 
         
         
-
+class PortfolioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Portfolio
+        fields = '__all__'
         

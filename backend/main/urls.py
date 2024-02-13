@@ -23,5 +23,7 @@ urlpatterns = [
     path('orders/',views.OrderList.as_view()),
     path('order-detail/<int:pk>',views.OrderDetail.as_view()),
     
+    path('dashboard/<str:username>/',views.get_portfolio_fields())
+    
 ]
 urlpatterns += router.urls

@@ -7,6 +7,7 @@ from . import models
 
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 from django.http import JsonResponse, response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -225,3 +226,12 @@ def customer_change_info(request):
         msg = JsonResponse(data=data)
     logging.debug(msg)
     return msg
+
+
+@api_view(['GET'])
+def get_portfolio_fields(username):
+    # model_fields = models.Portfolio._meta.get_fields()
+    user = User.objects.get(username=username)
+    model_instance = models.Portfolio.objects.filter(user=user)
+    serializer_class= serializer.PortfolioSerializer(model_instance, many=True)
+    return JsonResponse(serializer_class.data)

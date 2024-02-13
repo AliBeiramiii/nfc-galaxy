@@ -149,6 +149,13 @@ def customer_register(request):
             username = username,
             password = password,
         )
+        if not re.match(r'^[a-zA-Z0-9_]+$', username):
+            return JsonResponse({'error': 'Invalid username format'}, status=400)
+        if not re.match(r'^[a-zA-Z0-9_]+$', password) :
+            return JsonResponse({'error': 'Invalid password format'}, status=400)
+        if not re.match(r'^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]+$', email):
+            return JsonResponse({'error': 'Invalid email format'}, status=400)
+
         if user:
             try:
                 customer = models.Customer.objects.create(
@@ -181,14 +188,17 @@ def customer_register(request):
 
 
 @csrf_exempt
-def customer_login(request):
+def customer_change_info(request):
     username = request.POST.get("username")
     email = request.POST.get("email")
     first_name = request.POST.get("first_name")
     last_name = request.POST.get("last_name")
     mobile = request.POST.get("mobile")
     user = authenticate(username=username)
-    
+    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+        return JsonResponse({'error': 'Invalid username format'}, status=400)
+    if not re.match(r'^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]+$', email):
+        return JsonResponse({'error': 'Invalid email format'}, status=400)
     if user:
         
         payload ={

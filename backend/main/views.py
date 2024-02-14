@@ -1,6 +1,6 @@
 import logging
 from . import serializer
-from rest_framework import generics, permissions, pagination, viewsets
+from rest_framework import generics, permissions, pagination, viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
@@ -104,36 +104,9 @@ def customer_login(request):
             'msg':'نام کاربری یا رمز عبور اشتباه است.'
         }  
         msg = JsonResponse(data=data)
-    logging.debug(msg)
     return msg
-    # username = request.POST.get("username")
-    # password = request.POST.get("password")
-    # user = authenticate(username=username, password=password)
-    # if user:
-    #     msg = {
-    #         'bool':True,
-    #         'user':user.username
-    #     }
-    # else:
-    #     msg = {
-    #         'bool':False,
-    #         'test':username,
-    #         'test2':password,
-    #         'msg':'نام کاربری یا رمز عبور اشتباه است.'
-    #     }  
-    # return JsonResponse(msg)
 
-# class LoginView(APIView):
-#     @csrf_exempt
-#     def post(request):
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         return Response({
-#             'message':'hi'
-#         })
-        
-        
-        
+                
 @csrf_exempt
 def customer_register(request):
     first_name = request.POST.get('firstName')
@@ -191,41 +164,48 @@ def customer_register(request):
 
 @csrf_exempt
 def customer_change_info(request):
-    username = request.POST.get("username")
-    email = request.POST.get("email")
-    first_name = request.POST.get("first_name")
-    last_name = request.POST.get("last_name")
-    mobile = request.POST.get("mobile")
-    user = authenticate(username=username)
-    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+    old_username = request.POST.get('old_username')
+    new_username = request.POST.get("new_username")
+    new_email = request.POST.get("email")
+    new_first_name = request.POST.get("first_name")
+    new_last_name = request.POST.get("last_name")
+    new_mobile = request.POST.get("mobile")
+    user = authenticate(username=old_username)
+    
+    if not re.match(r'^[a-zA-Z0-9_]+$', old_username):
         return JsonResponse({'error': 'Invalid username format'}, status=400)
-    if not re.match(r'^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]+$', email):
+    if not re.match(r'^[a-zA-Z0-9_]+$', new_username):
+        return JsonResponse({'error': 'Invalid username format'}, status=400)
+    if not re.match(r'^[a-zA-Z0-9_]+@[a-zA-Z0-9]+\.[a-zA-Z]+$', new_email):
         return JsonResponse({'error': 'Invalid email format'}, status=400)
-    if user:
+
+    try:
+        user = User.objects.get(username=old_username)
+        customer = models.Customer.objects.get(user=user)
+    except models.Customer.DoesNotExist:
+        return JsonResponse({"error": "Model instance not found","test":old_username}, status=status.HTTP_404_NOT_FOUND)
+
+    # Update the desired fields manually
+    # Example: Updating a specific field named 'field_name'
+    # new_mobile = request.data.get('mobile')
+    # new_email = request.data.get('email')
+    try:
+        user.username = new_username
+        user.first_name = new_first_name,
+        user.last_name = new_last_name,
+        customer.email = new_email
+        customer.mobile = new_mobile
         
-        payload ={
-            'id':user.id,
-            'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow()
-        }
-        
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
-        
-        data = {
-            'bool':True,
-            'token':token,
-        }
-        msg = JsonResponse(data)
-        msg.set_cookie(key='jwt', value=token, httponly=True)
-    else:
-        data = {
-            'bool':False,
-            'test':username,
-            'msg':'نام کاربری یا رمز عبور اشتباه است.'
-        }  
-        msg = JsonResponse(data=data)
-    logging.debug(msg)
-    return msg
+        # Save the changes
+        user.save()
+        customer.save()
+    except:         
+        return JsonResponse({"error": "error editing files"})
+
+
+    return JsonResponse({"success": "Model instance updated"}, status=status.HTTP_200_OK)
+    
+
 
 
 @api_view(['GET'])

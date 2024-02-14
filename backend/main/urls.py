@@ -23,7 +23,10 @@ urlpatterns = [
     path('orders/',views.OrderList.as_view()),
     path('order-detail/<int:pk>',views.OrderDetail.as_view()),
     
-    path('customer/dashboard/',views.get_portfolio_fields)
+    path('customer/dashboard/',views.get_portfolio_fields),
+    
+    path('customer/change_info/',views.customer_change_info, name='customer-edit-info')
+    
     
 ]
 urlpatterns += router.urls

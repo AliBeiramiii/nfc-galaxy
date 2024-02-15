@@ -185,10 +185,6 @@ def customer_change_info(request):
     except models.Customer.DoesNotExist:
         return JsonResponse({"error": "Model instance not found","test":old_username}, status=status.HTTP_404_NOT_FOUND)
 
-    # Update the desired fields manually
-    # Example: Updating a specific field named 'field_name'
-    # new_mobile = request.data.get('mobile')
-    # new_email = request.data.get('email')
     try:
         user.username = new_username
         user.first_name = new_first_name,
@@ -196,17 +192,44 @@ def customer_change_info(request):
         customer.email = new_email
         customer.mobile = new_mobile
         
-        # Save the changes
         user.save()
         customer.save()
     except:         
         return JsonResponse({"error": "error editing files"})
 
-
     return JsonResponse({"success": "Model instance updated"}, status=status.HTTP_200_OK)
     
 
+@csrf_exempt
+def customer_reset_password(request):
+    
+    username = request.POST.get("username")
+    old_password = request.POST.get('old_password')
+    new_password = request.POST.get("new_password")
 
+    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+        return JsonResponse({'error': 'Invalid username format'}, status=400)
+    if not re.match(r'^[a-zA-Z0-9_]+$', old_password):
+        return JsonResponse({'error': 'Invalid username format'}, status=400)
+    if not re.match(r'^[a-zA-Z0-9_]+$', new_password):
+        return JsonResponse({'error': 'Invalid username format'}, status=400)
+    
+    try:
+        user = authenticate(username=username, password=old_password)
+    except models.User.DoesNotExist:
+        return JsonResponse({"error": "Model instance not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        if user:
+            user.set_password(new_password)
+            user.save()
+        else:
+            return JsonResponse({"error": "Wrong password","test":username+" "+old_password+" "+new_password}, status=status.HTTP_401_UNAUTHORIZED)
+            
+    except:         
+        return JsonResponse({"error": "error editing files"})
+
+    return JsonResponse({"success": "Model instance updated"}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_portfolio_fields(username):

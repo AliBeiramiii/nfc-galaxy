@@ -12,6 +12,8 @@ import ResetUserInformation from './pages/ChangeInfo'
 import Register from './pages/Register'
 import Dashboard from './pages/DashBoard'
 import PurchaseSteps from './pages/PurchaseSteps'
+import ResetPassword from './pages/ResetPassword'
+
 
 function App() {
 
@@ -25,6 +27,7 @@ function App() {
         <Route path="about-us" element={<AboutUs/>}/>
         <Route path="contact-us" element={<ContactUs/>}/>
         <Route path="product-purchase-steps" element={<PurchaseSteps/>}/>
+        <Route path="reset-password" element={<ResetPassword/>}/>
       </Route>
         <Route path="/customer/dashboard" element={<Dashboard/>}/>
         <Route path="/login" element={<Login/>}/>

@@ -15,17 +15,6 @@ import jwt , datetime
 import re
 
 
-class VendorList(generics.ListCreateAPIView):
-    queryset = models.Vendor.objects.all()
-    serializer_class = serializer.VendorSerializers
-    # permission_classes = [permissions.IsAuthenticated]
-
-class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Vendor.objects.all()
-    serializer_class = serializer.VendorDetailSerializers
-    # permission_classes = [permissions.IsAuthenticated]
-
-
 class ProductList(generics.ListCreateAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializer.ProductSerializer
@@ -35,40 +24,16 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializer.ProductSerializer
   
-    
-class CustomerList(generics.ListCreateAPIView):
-    queryset = models.Customer.objects.all()
-    serializer_class = serializer.CustomerSerializers
-    # permission_classes = [permissions.IsAuthenticated]
-
-class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Customer.objects.all()
-    serializer_class = serializer.CustomerDetailSerializers
-    # permission_classes = [permissions.IsAuthenticated]
-
 
 class MyOrderListView(APIView):
     def get(self, request):
-        user = request.user
+        username = request.POST.get('username')
+        if not re.match(r'^[a-zA-Z0-9_]+$', username):
+            return JsonResponse({'error': 'Invalid username format'}, status=400)
+        user = User.objects.get(username=username)
         orders = models.Order.objects.filter(user=user)
         serializer_class = serializer.OrderSerializer(orders, many=True)
         return Response(serializer_class.data)
-    
-class OrderDetail(generics.ListAPIView):
-
-    serializer_class = serializer.OrderItemSerializer
-    
-    def get_queryset(self):
-        order_id = self.kwargs['pk']
-        order = models.Order.objects.get(id=order_id)
-        order_items = models.OrderItem.objects.filter(order=order)
-        return order_items
-    # permission_classes = [permissions.IsAuthenticated]
-
-class CustomerAddressViewSet(viewsets.ModelViewSet):
-    serializer_class = serializer.CustomerAddressSerializers
-    queryset = models.CustomerAdddress.objects.all()
-
 
 
 @csrf_exempt

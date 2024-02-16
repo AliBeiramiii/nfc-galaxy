@@ -24,26 +24,12 @@ class VendorDetailSerializers(serializers.ModelSerializer):
         # self.Meta.depth = 1 
         
         
-class ProductListSerializers(serializers.ModelSerializer):
-    class Meta():
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
         model = models.Product
-        fields = ['id', 'category', 'vendor', 'title', 'detail', 'price']
-    
-    #to showing data for each user
-    def __init__(self, *args, **kwargs):
-        super(ProductListSerializers, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1
-       
-class ProductDetailSerializers(serializers.ModelSerializer):
-    # product_ratings = serializers.PrimaryKeyRelatedField(many=True, read_only= True)
-    class Meta():
-        model = models.Product
-        fields = ['id', 'category', 'vendor', 'title', 'detail', 'price']
-    
-    #to showing data for each user
-    def __init__(self, *args, **kwargs):
-        super(ProductDetailSerializers, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1    
+        fields = "__all__"
+
+
         
         
 class CustomerSerializers(serializers.ModelSerializer): 
@@ -67,26 +53,17 @@ class CustomerDetailSerializers(serializers.ModelSerializer):
         self.Meta.depth = 1   
 
 
-class OrderSerializers(serializers.ModelSerializer): 
-    class Meta():
-        model = models.Order
-        fields = ['id', 'customer']
-    
-    #to showing data for each user
-    def __init__(self, *args, **kwargs):
-        super(OrderSerializers, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1 
-
-
-class OrderDeatailSerializers(serializers.ModelSerializer): 
-    class Meta():
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
         model = models.OrderItem
-        fields = ['id', 'order', 'product']
-    
-    #to showing data for each user
-    def __init__(self, *args, **kwargs):
-        super(OrderDeatailSerializers, self).__init__(*args, **kwargs)
-        # self.Meta.depth = 1       
+        fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    products = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = models.Order
+        fields = '__all__'
 
 
 class CustomerAddressSerializers(serializers.ModelSerializer): 

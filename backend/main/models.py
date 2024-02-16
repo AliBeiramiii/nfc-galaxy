@@ -17,14 +17,10 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
-    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
-    title = models.CharField(max_length=200)
-    detail = models.TextField(null=True)
-    price = models.FloatField()
-    
-    def __str__(self):
-        return self.title
+    name = models.CharField(max_length=100,default='')
+    description = models.TextField(default='')
+    price = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    image = models.ImageField(upload_to='product_images/',null=True)
 
 
 class Customer(models.Model):
@@ -55,16 +51,6 @@ class Portfolio(models.Model):
     card_NO = models.IntegerField(null=True)
     portfolio_views = models.IntegerField(null=True)
 
-    
-class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order_time = models.DateTimeField(auto_now_add = True)
-    
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
 
 class CustomerAdddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -74,11 +60,17 @@ class CustomerAdddress(models.Model):
         return self.address
     
     
-# class ProductRating(models.Model):
-#     # customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-#     rating = models.IntegerField()
-#     reviews = models.TextField()
-#     add_time = models.DateTimeField( auto_now_add=True)
+class Order(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    company_name = models.CharField(max_length=200,null=True)
+    phone_number = models.CharField(max_length=15,null=True)
+    address = models.TextField(null=True)
+    postal_code = models.CharField(max_length=20,null=True)
+    products = models.ManyToManyField(Product, through='OrderItem')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
-#     def __str__(self):
-#         return f'{self.rating} - {self.reviews}'    
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True)

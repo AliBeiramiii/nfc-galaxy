@@ -28,12 +28,12 @@ class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ProductList(generics.ListCreateAPIView):
     queryset = models.Product.objects.all()
-    serializer_class = serializer.ProductListSerializers
+    serializer_class = serializer.ProductSerializer
     pagination_class = pagination.LimitOffsetPagination
 
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()
-    serializer_class = serializer.ProductDetailSerializers
+    serializer_class = serializer.ProductSerializer
   
     
 class CustomerList(generics.ListCreateAPIView):
@@ -47,14 +47,16 @@ class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [permissions.IsAuthenticated]
 
 
-class OrderList(generics.ListCreateAPIView):
-    queryset = models.Order.objects.all()
-    serializer_class = serializer.OrderSerializers
-    # permission_classes = [permissions.IsAuthenticated]
+class MyOrderListView(APIView):
+    def get(self, request):
+        user = request.user
+        orders = models.Order.objects.filter(user=user)
+        serializer_class = serializer.OrderSerializer(orders, many=True)
+        return Response(serializer_class.data)
     
 class OrderDetail(generics.ListAPIView):
 
-    serializer_class = serializer.OrderDeatailSerializers
+    serializer_class = serializer.OrderItemSerializer
     
     def get_queryset(self):
         order_id = self.kwargs['pk']
@@ -67,8 +69,7 @@ class CustomerAddressViewSet(viewsets.ModelViewSet):
     serializer_class = serializer.CustomerAddressSerializers
     queryset = models.CustomerAdddress.objects.all()
 
-# @api_view(('POST',))
-# @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+
 
 @csrf_exempt
 def customer_login(request):
@@ -105,8 +106,7 @@ def customer_login(request):
         }  
         msg = JsonResponse(data=data)
     return msg
-
-                
+               
 @csrf_exempt
 def customer_register(request):
     first_name = request.POST.get('firstName')
@@ -161,7 +161,6 @@ def customer_register(request):
         
     return JsonResponse(msg)
 
-
 @csrf_exempt
 def customer_change_info(request):
     old_username = request.POST.get('old_username')
@@ -199,7 +198,6 @@ def customer_change_info(request):
 
     return JsonResponse({"success": "Model instance updated"}, status=status.HTTP_200_OK)
     
-
 @csrf_exempt
 def customer_reset_password(request):
     

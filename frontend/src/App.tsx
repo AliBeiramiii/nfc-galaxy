@@ -13,6 +13,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Layout/DashBoard'
 import PurchaseSteps from './pages/PurchaseSteps'
 import ResetPassword from './pages/ResetPassword'
+import PortfolioForm from './pages/test'
 import UserInfo from './components/DashboardComponents/UserInfo'
 
 
@@ -34,6 +35,7 @@ function App() {
         </Route>
       </Route>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/ordering" element={<PortfolioForm/>}/>
         <Route path="/editing-information" element={<ResetUserInformation/>}/>
         <Route path="/register" element={<Register/>}/>
     </Routes>

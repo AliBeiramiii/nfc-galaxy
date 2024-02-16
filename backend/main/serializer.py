@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from rest_framework.fields import empty
 from . import models
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
         
 class ProductSerializer(serializers.ModelSerializer):
@@ -20,6 +22,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = models.OrderItem
         fields = '__all__'
 
+
 class OrderSerializer(serializers.ModelSerializer):
     products = OrderItemSerializer(many=True)
 
@@ -32,4 +35,11 @@ class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Portfolio
         fields = '__all__'
-        
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        return token        

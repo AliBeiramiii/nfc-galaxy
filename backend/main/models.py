@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     name = models.CharField(max_length=100,default='')
     description = models.TextField(default='')
-    color = models.TextField(default='')
+    color = models.CharField(max_length=20,default='')
     price = models.DecimalField(max_digits=10, decimal_places=2,null=True)
     image = models.ImageField(upload_to='product_images/',null=True)
     
@@ -41,7 +41,7 @@ class Portfolio(models.Model):
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
-    company_name = models.CharField(max_length=200,null=True)
+    company_name = models.CharField(max_length=200,blank=True)
     phone_number = models.CharField(max_length=15,null=True)
     address = models.TextField(null=True)
     postal_code = models.CharField(max_length=20,null=True)
@@ -52,5 +52,6 @@ class Order(models.Model):
     
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE,null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=True)

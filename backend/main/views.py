@@ -56,10 +56,14 @@ def customer_login(request):
         }
         
         token = jwt.encode(payload, 'secret', algorithm='HS256')
-        
+        customer = models.Customer.objects.get(user=user)
         data = {
             'bool':True,
             'token':token,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email': customer.email,
+            'mobile':customer.mobile
         }
         msg = JsonResponse(data)
         msg.set_cookie(key='jwt', value=token, httponly=True)

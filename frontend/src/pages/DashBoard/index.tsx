@@ -19,38 +19,145 @@
 // };
 
 // export default Dashboard;
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AuthContext, { useAuth } from '../../context-Api/AuthProvider';
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useAuth } from '../../context-Api/AuthProvider';
 
+// const ModelFieldsComponent: React.FC = () => {
+//     const [fields, setFields] = useState([]);
+//     // const searchUsername = 'desired-username'; // Provide the desired username for the search
+//     const {authData, setAuthData} = useAuth();
+//     // useEffect(() => {
+//     //     const fetchData = async () => {
+//     //         try {
+//     //             const response = await axios.get("http://127.0.0.1:8000/api/customer/dashboard/");
+//     //             setFields(response.data);
+//     //         } catch (error) {
+//     //             console.error(error);
+//     //         }
+//     //     };
 
-const ModelFieldsComponent: React.FC = () => {
-    const [fields, setFields] = useState([]);
-    // const searchUsername = 'desired-username'; // Provide the desired username for the search
-    const {authData, setAuthData} = useAuth();
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://127.0.0.1:8000/api/customer/dashboard/");
-                setFields(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        
-        fetchData();
-    })
+//     //     fetchData();
+//     // })
 
-    return (
-        <div>
-            <h1>Model Fields for User: {authData.user}</h1>
-            <ul>
-                {fields.map((field: any) => (
-                    <li key={field.name}>{field.name}</li>
-                ))}
-            </ul>
+//     return (
+//         // <div>
+//         //     <h1>Model Fields for User: {authData.user}</h1>
+//         //     <ul>
+//         //         {fields.map((field: any) => (
+//         //             <li key={field.name}>{field.name}</li>
+//         //         ))}
+//         //     </ul>
+//         // </div>
+//             <>
+//             </>
+//     );
+// };
+
+// export default ModelFieldsComponent;
+
+import React, { useState } from "react";
+import { useAuth } from "../../context-Api/AuthProvider";
+import { MdSpaceDashboard } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { BsFillBasket2Fill } from "react-icons/bs";
+import { FaTruckFast } from "react-icons/fa6";
+import { MdOutlineExitToApp } from "react-icons/md";
+import { IoHomeSharp } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
+
+const DashBoard: React.FC = () => {
+  const { authData, setAuthData } = useAuth();
+  const [tabButtonColor, setTabButtonColor] = useState("white");
+
+  return (
+    <>
+      <div className="bg-[#1A1A1A] border border-hidden rounded-2xl text-white flex justify-center">
+        <div className="flex flex-col justify-start bg-[#272626] border border-hidden rounded-2xl gap-10">
+          <div className="flex p-10">سلام {authData.firstname} عزیز</div>
+          <div className="flex h-[50px] justify-center">
+            <button className="mt-[-3px] hover:mt-[-7px] text-black font-bold py-2 rounded">
+              <NavLink to="/">
+                <IoHomeSharp size={40} color="white" />
+              </NavLink>
+            </button>
+          </div>
+          <ul className="flex flex-col justify-between gap-0 text-2xl mb-10">
+            <li
+              className="flex justify-start gap-0 hover:cursor-pointer"
+              onMouseEnter={() => {
+                setTabButtonColor("gray");
+              }}
+              onMouseLeave={() => {
+                setTabButtonColor("white");
+              }}
+            >
+              <div className="border border-hidden rounded-tl-xl bg-[#1A1A1A] p-4">
+                <MdSpaceDashboard size={40} color={tabButtonColor} />
+              </div>
+              <div className={"p-4 text-" + tabButtonColor + "-400"}>
+                داشبورد
+              </div>
+            </li>
+            <li className="flex justify-start gap-0 hover:cursor-pointer"
+              onMouseEnter={() => {
+                setTabButtonColor("gray");
+              }}
+              onMouseLeave={() => {
+                setTabButtonColor("white");
+              }}>
+              <div className="border border-hidden bg-[#1A1A1A] p-4">
+                <FaRegEdit size={40} color="white" />
+              </div>
+              <div className={"p-4 text-" + tabButtonColor + "-400"}>
+                ویرایش حساب
+              </div>
+            </li>
+            <li className="flex justify-start gap-0 hover:cursor-pointer"
+              onMouseEnter={() => {
+                setTabButtonColor("gray");
+              }}
+              onMouseLeave={() => {
+                setTabButtonColor("white");
+              }}>
+              <div className="border border-hidden bg-[#1A1A1A] p-4">
+                <BsFillBasket2Fill size={40} color="white" />
+              </div>
+              <div className={"p-4 text-" + tabButtonColor + "-400"}>
+                سفارشات
+              </div>
+            </li>
+            <li className="flex justify-start gap-0 hover:cursor-pointer"
+              onMouseEnter={() => {
+                setTabButtonColor("gray");
+              }}
+              onMouseLeave={() => {
+                setTabButtonColor("white");
+              }}>
+              <div className="border border-hidden bg-[#1A1A1A] p-4">
+                <FaTruckFast size={40} color="white" />
+              </div>
+              <div className={"p-4 text-" + tabButtonColor + "-400"}>
+                پیگیری سفارشات
+              </div>
+            </li>
+            <li className="flex justify-start gap-0 hover:cursor-pointer"
+              onMouseEnter={() => {
+                setTabButtonColor("gray");
+              }}
+              onMouseLeave={() => {
+                setTabButtonColor("white");
+              }}>
+              <div className="border border-hidden rounded-bl-xl bg-[#1A1A1A] p-4">
+                <MdOutlineExitToApp size={40} color="white" />
+              </div>
+              <div className={"p-4 text-" + tabButtonColor + "-400"}>خروج</div>
+            </li>
+          </ul>
         </div>
-    );
+      </div>
+    </>
+  );
 };
 
-export default ModelFieldsComponent;
+export default DashBoard;

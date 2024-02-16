@@ -44,7 +44,7 @@ const Login: React.FC = () => {
       .then((response) => {
         if (response.data.bool) {
           console.log(response.data);
-          setAuthData({ user: username, pass: password });
+          setAuthData({ user: username, pass: password});
           setUsername("");
           setPassword("");
           setSuccess(true);

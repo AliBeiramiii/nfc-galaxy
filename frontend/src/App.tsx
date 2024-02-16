@@ -28,8 +28,10 @@ function App() {
         <Route path="contact-us" element={<ContactUs/>}/>
         <Route path="product-purchase-steps" element={<PurchaseSteps/>}/>
         <Route path="reset-password" element={<ResetPassword/>}/>
+        <Route path="my-account/" element={<Dashboard/>}>
+          <Route index element={<></>}/>  
+        </Route>
       </Route>
-        <Route path="/customer/dashboard" element={<Dashboard/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/editing-information" element={<ResetUserInformation/>}/>
         <Route path="/register" element={<Register/>}/>

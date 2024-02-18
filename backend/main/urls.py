@@ -29,5 +29,7 @@ urlpatterns = [
           jwt_views.TokenRefreshView.as_view(), 
           name ='token_refresh'),
      path('dashboard/', views.get_profile),
+     
+     path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout')
     
 ]

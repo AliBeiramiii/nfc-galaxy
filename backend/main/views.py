@@ -1,4 +1,8 @@
 import logging
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import OutstandingToken
+from rest_framework_simplejwt.views import TokenViewBase
 from . import serializer
 from rest_framework import generics, permissions, pagination, viewsets, status
 from rest_framework.views import APIView
@@ -137,24 +141,24 @@ def customer_login(request):
     
     if user:
         
-        payload ={
-            'id':user.id,
-            'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow()
-        }
+        # payload ={
+        #     'id':user.id,
+        #     'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+        #     'iat': datetime.datetime.utcnow()
+        # }
         
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
+        # token = jwt.encode(payload, 'secret', algorithm='HS256')
         customer = models.Customer.objects.get(user=user)
         data = {
             'bool':True,
-            'token':token,
+            # 'token':token,
             'first_name':user.first_name,
             'last_name':user.last_name,
             'email': customer.email,
             'mobile':customer.mobile
         }
         msg = JsonResponse(data)
-        msg.set_cookie(key='jwt', value=token, httponly=True)
+        # msg.set_cookie(key='jwt', value=token, httponly=True)
     else:
         data = {
             'bool':False,
@@ -305,3 +309,17 @@ def get_profile(request):
     specific_customer = models.Customer.objects.get(user=user)
     serializer_class = serializer.CustomerSerializers(specific_customer, many=False)
     return Response(serializer_class.data)
+
+
+class LogoutAndBlacklistRefreshTokenForUserView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

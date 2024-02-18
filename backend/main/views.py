@@ -18,100 +18,101 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 
 
+class MyTokenObtainPairSerializer(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = serializer.MyTokenObtainPairSerializer
+
+
 class ProductList(generics.ListCreateAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializer.ProductSerializer
     pagination_class = pagination.LimitOffsetPagination
 
+
 class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Product.objects.all()
     serializer_class = serializer.ProductSerializer
-  
-# @csrf_exempt
-# def order(request):
-    # first_name = request.POST.get('first_name_eng')
-    # last_name = request.POST.get('last_name_eng')
-    # company_name = request.POST.get('company_name')
-    # mobile_number_portfolio = request.POST.get('mobile_number_portfolio')
-    # website_link = request.POST.get('website_link')
-    # instagram_id = request.POST.get('instagram_id')
-    # telegram_id = request.POST.get('telegram_id')
-    # x_id = request.POST.get('x_id')
-    # card_number = request.POST.get('card_number')
-    # sheba_number = request.POST.get('sheba_number')
-    # address_portfolio = request.POST.get('address_portfolio')
-    # location_link = request.POST.get('location_link')
-    # card_color = request.POST.get('card_color')
-    # card_quantity = request.POST.get('card_quantity')
-    # product = request.POST.get('product')
-    # email = request.POST.get('email')
-    # username = request.POST.get('username')
+
+
+@csrf_exempt
+def order(request):
+    first_name = request.POST.get('first_name_eng')
+    last_name = request.POST.get('last_name_eng')
+    company_name = request.POST.get('company_name')
+    mobile_number_portfolio = request.POST.get('mobile_number_portfolio')
+    website_link = request.POST.get('website_link')
+    instagram_id = request.POST.get('instagram_id')
+    telegram_id = request.POST.get('telegram_id')
+    x_id = request.POST.get('x_id')
+    card_number = request.POST.get('card_number')
+    sheba_number = request.POST.get('sheba_number')
+    address_portfolio = request.POST.get('address_portfolio')
+    location_link = request.POST.get('location_link')
+    card_color = request.POST.get('card_color')
+    card_quantity = request.POST.get('card_quantity')
+    product = request.POST.get('product')
+    email = request.POST.get('email')
+    username = request.POST.get('username')
     
     
-    # try:
-    #     user = User.objects.create_user(
-    #         first_name = first_name,
-    #         last_name = last_name,
-    #         username = username,
-    #         password = password,
-    #     )
-    #     name_pattern = r'^[A-Za-z\s]{1,30}$'
-    #     company_pattern = r'^[A-Za-z0-9\s]{1,50}$'
-    #     mobile_number_pattern = r'^\d{11}$'
-    #     website_pattern = r'^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
-    #     instagram_pattern = r'^[a-zA-Z0-9._]{1,30}$'
-    #     telegram_pattern = r'^[a-zA-Z0-9._]{1,30}$'
-    #     x_id_pattern = r'^[a-zA-Z0-9._]{1,30}$'
-    #     card_number_pattern = r'^\d{16}$'
-    #     sheba_number_pattern = r'^IR\d{24}$'
-    #     address_pattern = r'^.{1,100}$'
-    #     location_link_pattern = r'^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
-    #     email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    #     username_pattern = r'^[a-zA-Z0-9._]{5,20}$'
+    try:
+        name_pattern = r'^[A-Za-z\s]{1,30}$'
+        company_pattern = r'^[A-Za-z0-9\s]{1,50}$'
+        mobile_number_pattern = r'^\d{11}$'
+        website_pattern = r'^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+        instagram_pattern = r'^[a-zA-Z0-9._]{1,30}$'
+        telegram_pattern = r'^[a-zA-Z0-9._]{1,30}$'
+        x_id_pattern = r'^[a-zA-Z0-9._]{1,30}$'
+        card_number_pattern = r'^\d{16}$'
+        sheba_number_pattern = r'^IR\d{24}$'
+        address_pattern = r'^.{1,100}$'
+        location_link_pattern = r'^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        username_pattern = r'^[a-zA-Z0-9._]{5,20}$'
 
-    #     if re.match(name_pattern, first_name) and re.match(name_pattern, last_name) and \
-    #         re.match(company_pattern, company_name) and re.match(mobile_number_pattern, mobile_number_portfolio) and \
-    #         re.match(website_pattern, website_link) and re.match(instagram_pattern, instagram_id) and \
-    #         re.match(telegram_pattern, telegram_id) and re.match(x_id_pattern, x_id) and \
-    #         re.match(card_number_pattern, card_number) and re.match(sheba_number_pattern, sheba_number) and \
-    #         re.match(address_pattern, address_portfolio) and re.match(location_link_pattern, location_link) and \
-    #         re.match(email_pattern, email) and re.match(username_pattern, username):
-    #         pass
-    #     else:
-    #         # Invalid input
-    #         return JsonResponse({'error': 'Invalid username format'}, status=400)
+        if re.match(name_pattern, first_name) and re.match(name_pattern, last_name) and \
+            re.match(company_pattern, company_name) and re.match(mobile_number_pattern, mobile_number_portfolio) and \
+            re.match(website_pattern, website_link) and re.match(instagram_pattern, instagram_id) and \
+            re.match(telegram_pattern, telegram_id) and re.match(x_id_pattern, x_id) and \
+            re.match(card_number_pattern, card_number) and re.match(sheba_number_pattern, sheba_number) and \
+            re.match(address_pattern, address_portfolio) and re.match(location_link_pattern, location_link) and \
+            re.match(email_pattern, email) and re.match(username_pattern, username):
+            pass
+        else:
+            # Invalid input
+            return JsonResponse({'error': 'Invalid username format'}, status=400)
 
-    #     if user:
-    #         try:
-    #             customer = models.Customer.objects.create(
-    #                 user = user,
-    #                 mobile = mobile,
-    #                 email  = email
-    #             )
-    #             msg = {
-    #                 'bool':True,
-    #                 'user':user.id,
-    #                 'customer':customer.id,
-    #                 'msg':'thank you for your registration. You can log in now'
-    #             }
-    #         except IntegrityError:
-    #             user.delete()
-    #             msg = {
-    #             'bool':False,
-    #             'msg':'Phone number or email number already exist'
-    #         }
-    #     else:
-    #         msg = {
-    #             'bool':False,
-    #             'msg':'Ops... something went wrong'
-    #         }  
-    # except IntegrityError:
-    #     msg = {
-    #             'bool':False,
-    #             'msg':'This username is already created',
-    #         }  
+        if user:
+            try:
+                customer = models.Customer.objects.create(
+                    user = user,
+                    mobile = mobile,
+                    email  = email
+                )
+                msg = {
+                    'bool':True,
+                    'user':user.id,
+                    'customer':customer.id,
+                    'msg':'thank you for your registration. You can log in now'
+                }
+            except IntegrityError:
+                user.delete()
+                msg = {
+                'bool':False,
+                'msg':'Phone number or email number already exist'
+            }
+        else:
+            msg = {
+                'bool':False,
+                'msg':'Ops... something went wrong'
+            }  
+    except IntegrityError:
+        msg = {
+                'bool':False,
+                'msg':'This username is already created',
+            }  
         
-    # return JsonResponse(msg)
+    return JsonResponse(msg)
 
 @csrf_exempt
 def MyOrderListView(request):
@@ -301,6 +302,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @permission_classes([IsAuthenticated])
 def get_profile(request):
     user = request.user
-    customer = user.profile
-    serializer_class = serializer.CustomerSerializers(customer, many=False)
+    specific_customer = models.Customer.objects.get(user=user)
+    serializer_class = serializer.CustomerSerializers(specific_customer, many=False)
     return Response(serializer_class.data)

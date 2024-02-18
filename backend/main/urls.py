@@ -8,6 +8,8 @@ urlpatterns = [
     
     path('customer/dashboard/',views.get_portfolio_fields),
     
+#     path('customer/order-portfoio/',views.),
+    
     path('customer/change_info/',views.customer_change_info, name='customer-edit-info'),
 
     path('customer/reset-password/',views.customer_reset_password, name='customer-reset-password'),
@@ -21,7 +23,7 @@ urlpatterns = [
     path('customer/get-my-order-list/',views.MyOrderListView),
 
     path('token/', 
-          jwt_views.TokenObtainPairView.as_view(), 
+          views.MyTokenObtainPairSerializer.as_view(), 
           name ='token_obtain_pair'),
      path('token/refresh/', 
           jwt_views.TokenRefreshView.as_view(), 

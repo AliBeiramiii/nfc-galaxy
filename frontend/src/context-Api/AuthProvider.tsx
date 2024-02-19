@@ -25,7 +25,7 @@ interface AuthProviderProps {
 
 // Create the AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authData, setAuthData] = useState({ user: '', pass: '', firstname: 'خوشتیپ، حواست هست', lastname: '', mobile: '', email: '' });
+  const [authData, setAuthData] = useState({ user: '', pass: 'root1234', firstname: 'علی', lastname: '', mobile: '', email: '' });
 
   // Value to be provided by the context
   const authContextValue: AuthContextType = {

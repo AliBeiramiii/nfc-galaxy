@@ -90,7 +90,7 @@ const HomePage: React.FC = () => {
       >
         <ul className="flex flex-col gap-16 justify-center basis-1/3">
           <li className="flex self-end gap-3 text-white font-normal text-xl">
-            <span>{authData.user}</span>
+            <span>کیفیت</span>
             <div className="mt-1">
               <FaCircle size={20} />
             </div>

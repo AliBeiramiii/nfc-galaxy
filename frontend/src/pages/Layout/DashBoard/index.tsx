@@ -65,15 +65,17 @@ import { FaTruckFast } from "react-icons/fa6";
 import { MdOutlineExitToApp } from "react-icons/md";
 import { IoHomeSharp } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router-dom";
+import Footer from "../../../components/Footer";
 
 const DashBoard: React.FC = () => {
   const { authData, setAuthData } = useAuth();
   const [tabButtonColor, setTabButtonColor] = useState("white");
   const [tabButtonIndex, setTabButtonIndex] = useState(-1);
+  
 
   return (
     <>
-      <div className="bg-[#1A1A1A] border border-hidden rounded-3xl text-white flex justify-center">
+      <div className="bg-[#1A1A1A] border border-hidden rounded-3xl text-white flex justify-start  px-40 gap-40">
         <div className="flex flex-col justify-start bg-[#272626] border border-hidden rounded-3xl gap-10">
           <div className="flex p-10">سلام {authData.firstname} عزیز</div>
           <div className="flex h-[50px] justify-center">
@@ -158,6 +160,7 @@ const DashBoard: React.FC = () => {
         </div>
         <Outlet/>
       </div>
+      <Footer/>
     </>
   );
 };

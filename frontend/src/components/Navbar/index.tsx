@@ -11,6 +11,7 @@ import { SiInstagram } from "react-icons/si";
 import { ImYoutube } from "react-icons/im";
 import WebsiteLogo from "../../assets/WebsiteLogo.png";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "../../context-Api/AuthProvider";
 
 interface NavbarProps {
   handleNavigation: (sectionId: string) => void;
@@ -20,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
   const [nav, setNav] = useState(false);
   const location = useLocation();
   const [activeSection, setActiveSection] = useState<string>("home");
+  const {authData} = useAuth();
 
   const handleNav = () => {
     setNav(!nav);
@@ -112,9 +114,11 @@ const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
               </button>
             </li>
           </ul>
-          <button className="flex justify-center border border-black rounded-3xl h-[48px] w-[174px] items-center mt-2 hover:bg-gray-100 hover:mt-[6px] hover:mb-[10px]">
+          <button className={`flex justify-center border ${authData.user!=='' ? 'bg-gray-800 text-white hover:bg-gray-900' : 'hover:bg-gray-100'} border-black rounded-3xl h-[48px] p-3 items-center mt-2 hover:mt-[6px] hover:mb-[10px]`}>
                 <div className="">
-                <NavLink to="/login">ورود/عضویت</NavLink>
+                {authData.user!=='' ? (<NavLink to="/my-account">پنل کاربری {authData.firstname}</NavLink>):(
+                <NavLink to="/login"> ورود / عضویت</NavLink>
+                )}
                 </div>
           </button>
         </div>

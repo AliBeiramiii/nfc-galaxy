@@ -291,6 +291,7 @@ def customer_reset_password(request):
     return JsonResponse({"success": "Model instance updated"}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_portfolio_fields(username):
     # model_fields = models.Portfolio._meta.get_fields()
     user = User.objects.get(username=username)

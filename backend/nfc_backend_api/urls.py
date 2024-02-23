@@ -26,13 +26,14 @@ http post http://127.0.0.1:8000/api/token/refresh/ refresh=your refresh token
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt import views as jwt_views
+from azbankgateways.urls import az_bank_gateways_urls
+from main.views import go_to_gateway_view,callback_gateway_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main.urls')),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('api-auth/', include('rest_framework.urls')),
+    path('bankgateways/', az_bank_gateways_urls()),
+    path('go-to-gateway/', go_to_gateway_view),
+    path('callback-gateway/',callback_gateway_view)
 ]

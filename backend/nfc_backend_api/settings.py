@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'azbankgateways',
     'rest_framework_simplejwt.token_blacklist'
 ]
 
@@ -204,3 +205,26 @@ CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000'
 ]
 
+AZ_IRANIAN_BANK_GATEWAYS = {
+   'GATEWAYS': {
+        'ZARINPAL': {
+           'MERCHANT_CODE': '4f681c69-c676-44a6-9864-b8159475b134',
+           'SANDBOX': 1,  # 0 disable, 1 active
+       },
+   },
+   'IS_SAMPLE_FORM_ENABLE': True, # اختیاری و پیش فرض غیر فعال است
+   'DEFAULT': 'ZARINPAL',
+   'CURRENCY': 'IRR', # اختیاری
+   'TRACKING_CODE_QUERY_PARAM': 'tc', # اختیاری
+   'TRACKING_CODE_LENGTH': 16, # اختیاری
+   'SETTING_VALUE_READER_CLASS': 'azbankgateways.readers.DefaultReader', # اختیاری
+   'BANK_PRIORITIES': [
+       'SEP',
+       # and so on ...
+   ], # اختیاری
+#    'IS_SAFE_GET_GATEWAY_PAYMENT': False, #اختیاری، بهتر است True بزارید.
+#    'CUSTOM_APP': None, # اختیاری 
+}
+
+# USE_X_FORWARDED_HOST = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

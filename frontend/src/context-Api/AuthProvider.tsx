@@ -2,8 +2,8 @@ import React, { createContext, useState, useContext } from 'react';
 
 // Define the type for the authentication context
 interface AuthContextType {
-  authData: { user: string; pass: string, firstname: string, lastname: string, mobile: string, email: string  };
-  setAuthData: React.Dispatch<React.SetStateAction<{ user: string; pass: string, firstname: string, lastname: string, mobile: string, email: string }>>;
+  authData: { user: string; pass: string  };
+  setAuthData: React.Dispatch<React.SetStateAction<{ user: string; pass: string }>>;
 }
 
 // Create the authentication context
@@ -25,7 +25,7 @@ interface AuthProviderProps {
 
 // Create the AuthProvider component
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authData, setAuthData] = useState({ user: '', pass: 'root1234', firstname: 'علی', lastname: '', mobile: '', email: '' });
+  const [authData, setAuthData] = useState({ user: '', pass: '' });
 
   // Value to be provided by the context
   const authContextValue: AuthContextType = {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -15,6 +15,8 @@ import PurchaseSteps from './pages/PurchaseSteps'
 import ResetPassword from './pages/ResetPassword'
 import OrderPOrtfolio from './pages/test'
 import UserInfo from './components/DashboardComponents/UserInfo'
+import axios from 'axios'
+
 
 
 function App() {

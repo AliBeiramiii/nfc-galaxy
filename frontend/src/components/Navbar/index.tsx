@@ -114,9 +114,9 @@ const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
               </button>
             </li>
           </ul>
-          <button className={`flex justify-center border ${authData.user!=='' ? 'bg-gray-800 text-white hover:bg-gray-900' : 'hover:bg-gray-100'} border-black rounded-3xl h-[48px] p-3 items-center mt-2 hover:mt-[6px] hover:mb-[10px]`}>
+          <button className={`flex justify-center border ${localStorage.getItem("firstname") ? 'bg-gray-800 text-white hover:bg-gray-900' : 'hover:bg-gray-100'} border-black rounded-3xl h-[48px] p-3 items-center mt-2 hover:mt-[6px] hover:mb-[10px]`}>
                 <div className="">
-                {authData.user!=='' ? (<NavLink to="/my-account">پنل کاربری {authData.firstname}</NavLink>):(
+                {localStorage.getItem("firstname") ? (<NavLink to="/my-account">پنل کاربری {localStorage.getItem("firstname")}</NavLink>):(
                 <NavLink to="/login"> ورود / عضویت</NavLink>
                 )}
                 </div>

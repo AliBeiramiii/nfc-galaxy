@@ -57,7 +57,10 @@ const Login: React.FC = () => {
             },
           }
           ).then((secondResponse: AxiosResponse) => {
-            console.log(secondResponse);
+            localStorage.setItem('refresh',secondResponse.data?.refresh);
+            localStorage.setItem('access',secondResponse.data?.access);
+            localStorage.setItem('firstname',response.data?.first_name);
+            setSuccess(true);
           }).catch((error)=>{
             console.log(error);
           })

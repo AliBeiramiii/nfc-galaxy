@@ -154,7 +154,11 @@ const DashBoard: React.FC = () => {
               <div className="border border-hidden rounded-bl-xl bg-[#1A1A1A] p-4">
                 <MdOutlineExitToApp size={40} color={tabButtonIndex===4 ? 'gray' : 'white'} />
               </div>
-              <div className={`${tabButtonIndex===4 ? 'text-gray-400' : 'white'} ${' p-4'}`}>خروج</div>
+              <NavLink to="/" className={`${tabButtonIndex===4 ? 'text-gray-400' : 'white'} ${' p-4'}`} onClick={()=>{
+                localStorage.removeItem('access');
+                localStorage.removeItem('refresh');
+                localStorage.removeItem('firstname');
+              }}>خروج</NavLink>
             </li>
           </ul>
         </div>

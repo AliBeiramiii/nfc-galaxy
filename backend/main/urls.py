@@ -30,6 +30,8 @@ urlpatterns = [
           name ='token_refresh'),
      path('dashboard/', views.get_profile),
      
+     path('homepage/', views.get_profile2),
+     
      path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout')
     
 ]

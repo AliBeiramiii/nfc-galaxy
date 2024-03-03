@@ -14,8 +14,12 @@ class ProductSerializer(serializers.ModelSerializer):
 class CustomerSerializers(serializers.ModelSerializer): 
     class Meta():
         model = models.Customer
-        fields = ['id', 'user', 'mobile','email']
+        fields = ['id', 'user', 'mobile','email', 'firstname','lastname']
 
+class Customer2Serializers(serializers.ModelSerializer): 
+    class Meta():
+        model = models.Customer
+        fields = ['id', 'user', 'firstname','lastname']
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:

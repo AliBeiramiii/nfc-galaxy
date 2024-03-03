@@ -317,6 +317,13 @@ def get_profile(request):
     serializer_class = serializer.CustomerSerializers(specific_customer, many=False)
     return Response(serializer_class.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profile2(request):
+    user = request.user
+    specific_customer = models.Customer.objects.get(user=user)
+    serializer_class = serializer.Customer2Serializers(specific_customer, many=False)
+    return Response(serializer_class.data)
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
     permission_classes = (permissions.AllowAny,)

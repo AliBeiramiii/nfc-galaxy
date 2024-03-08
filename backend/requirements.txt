@@ -4,3 +4,4 @@ django-cors-headers==4.3.1
 az_iranian_bank_gateways==1.9.0
 djangorestframework-simplejwt==5.3.1
 psycopg==3.1.18
+

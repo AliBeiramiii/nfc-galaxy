@@ -313,25 +313,16 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @permission_classes([IsAuthenticated])
 def get_profile(request):
     user = request.user
-    firstname = user.firstname
-    lastname = user.lastname
-    specific_customer = models.Customer.objects.get(user=user)
-    serializer_class = serializer.CustomerSerializers(specific_customer, many=False)
-    serializer_class['firstname']= firstname
-    serializer_class['lastname']= lastname
-    return Response(serializer_class.data)
+    customer = models.Customer.objects.get(user=user)
+    data = {
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email': customer.email,
+            'mobile':customer.mobile,
+            'useranme':user.username,
+        }
+    return JsonResponse(data)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_profile2(request):
-    user = request.user
-    firstname = user.firstname
-    lastname = user.lastname
-    specific_customer = models.Customer.objects.get(user=user)
-    serializer_class = serializer.CustomerSerializers(specific_customer, many=False)
-    serializer_class['firstname']= firstname
-    serializer_class['lastname']= lastname
-    return Response(serializer_class.data)
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
     permission_classes = (permissions.AllowAny,)

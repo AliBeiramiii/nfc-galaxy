@@ -1,10 +1,8 @@
 import logging
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.tokens import OutstandingToken
-from rest_framework_simplejwt.views import TokenViewBase
 from . import serializer
-from rest_framework import generics, permissions, pagination, viewsets, status
+from rest_framework import generics, permissions, pagination, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models
@@ -13,7 +11,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-from django.http import JsonResponse, response
+from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
@@ -21,7 +19,6 @@ from django.http import Http404
 from django.http import HttpResponse
 from azbankgateways import bankfactories, models as bank_models, default_settings as settings
 from azbankgateways.exceptions import AZBankGatewaysException
-from django.urls import reverse
 
 import re
 from rest_framework.permissions import IsAuthenticated

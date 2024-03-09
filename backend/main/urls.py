@@ -30,6 +30,7 @@ urlpatterns = [
      
      path('homepage/', views.get_profile),
      
-     path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout')
+     path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout'),
     
+     path('set-portfolio/', views.set_portfolio_fields),
 ]

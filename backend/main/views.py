@@ -135,33 +135,24 @@ def MyOrderListView(request):
 def customer_login(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
-    if not re.match(r'^[a-zA-Z0-9_]+$', username):
+    if not re.match(r'^[a-zA-Z0-9_]+$', str(username)):
             return JsonResponse({'error': 'Invalid username format'}, status=400)
-    if not re.match(r'^[a-zA-Z0-9_]+$', password) :
+    if not re.match(r'^[a-zA-Z0-9_]+$', str(password)) :
             return JsonResponse({'error': 'Invalid password format'}, status=400)
     
     user = authenticate(username=username, password=password)
     
     if user:
         
-        # payload ={
-        #     'id':user.id,
-        #     'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-        #     'iat': datetime.datetime.utcnow()
-        # }
-        
-        # token = jwt.encode(payload, 'secret', algorithm='HS256')
         customer = models.Customer.objects.get(user=user)
         data = {
             'bool':True,
-            # 'token':token,
             'first_name':user.first_name,
             'last_name':user.last_name,
             'email': customer.email,
             'mobile':customer.mobile
         }
         msg = JsonResponse(data)
-        # msg.set_cookie(key='jwt', value=token, httponly=True)
     else:
         data = {
             'bool':False,
@@ -302,6 +293,51 @@ def get_portfolio_fields(username):
     serializer_class= serializer.PortfolioSerializer(model_instance, many=True)
     return JsonResponse(serializer_class.data)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def set_portfolio_fields(request):
+    user = request.user
+    customer = models.Customer.objects.get(user=user)
+    try:
+        portfolio_instance = models.Portfolio.objects.create(
+        customer = customer,
+        first_name_eng = request.POST.get('first_name_eng'),
+        last_name_eng = request.POST.get('last_name_eng'),
+        company_name=request.POST.get('company_name', ''),
+        mobile_number_portfolio=request.POST.get('mobile_number_portfolio'),
+        website_link=request.POST.get('website_link', ''),
+        youtube_link=request.POST.get('youtube_link', ''),
+        linkedIn_id=request.POST.get('linkedIn_id', ''),
+        whatsApp_id=request.POST.get('whatsApp_id', ''),
+        facebook_id=request.POST.get('facebook_id', ''),
+        ita_id=request.POST.get('ita_id', ''),
+        snapchat_id=request.POST.get('snapchat_id', ''),
+        roobika=request.POST.get('roobika', ''),
+        instagram_id=request.POST.get('instagram_id', ''),
+        telegram_id=request.POST.get('telegram_id', ''),
+        x_id=request.POST.get('x_id', ''),
+        card_number=request.POST.get('card_number'),
+        sheba_number=request.POST.get('sheba_number'),
+        visaCard_number=request.POST.get('visaCard_number'),
+        payPal_number=request.POST.get('payPal_number'),
+        mastecard_number=request.POST.get('mastecard_number'),
+        address_portfolio=request.POST.get('address_portfolio', ''),
+        image_portfolio=request.FILES.get('image_portfolio'),
+        CV_portfolio=request.FILES.get('CV_portfolio'),
+        location_link=request.POST.get('location_link', ''),
+        card_NO=request.POST.get('card_NO'),
+        portfolio_views=request.POST.get('portfolio_views'),
+    )
+        data={
+            "bool":True,
+        }
+    except:
+        data={
+            "bool":False,
+            "msg":"failed to register your portfolio"
+        }
+        
+    return JsonResponse(data=data)
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = serializer.MyTokenObtainPairSerializer

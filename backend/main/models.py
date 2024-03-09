@@ -48,8 +48,8 @@ class Portfolio(models.Model):
     image_portfolio = models.ImageField(upload_to="portfolio-picture",null=True,blank=True)
     CV_portfolio = models.FileField(upload_to="cv-portfolio",null=True,blank=True)
     location_link = models.TextField(default='',blank=True)
-    card_NO = models.IntegerField(null=True)
-    portfolio_views = models.IntegerField(null=True) 
+    card_NO = models.IntegerField(null=True,blank=True)
+    portfolio_views = models.IntegerField(null=True, blank=True) 
     
     def __str__(self):
         return self.customer.user.username + str(self.id)   

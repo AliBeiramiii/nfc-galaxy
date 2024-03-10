@@ -6,7 +6,7 @@ from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     
-    path('customer/dashboard/',views.get_portfolio_fields),
+#     path('customer/dashboard/',views.get_portfolio_fields),
     
 #     path('customer/order-portfoio/',views.),
 
@@ -20,6 +20,8 @@ urlpatterns = [
     
     path('customer/get-my-order-list/',views.MyOrderListView),
 
+    path('customer/portfolio/<str:name>',views.get_portfolio_fields ),
+    
     path('token/', 
           views.MyTokenObtainPairSerializer.as_view(), 
           name ='token_obtain_pair'),
@@ -33,4 +35,5 @@ urlpatterns = [
      path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout'),
     
      path('set-portfolio/', views.set_portfolio_fields),
+     
 ]

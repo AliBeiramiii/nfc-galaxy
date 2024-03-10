@@ -23,6 +23,7 @@ class Customer(models.Model):
     
 
 class Portfolio(models.Model):
+    name = models.CharField(max_length=50, default='')
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE,null=True, default=None)
     first_name_eng = models.CharField(max_length=200)
     last_name_eng = models.CharField(max_length=200)

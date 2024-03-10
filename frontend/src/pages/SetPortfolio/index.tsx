@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // Function to handle form submission and send data to backend
 const SetPortfolio = () => {
+    const [nameValue, setNameValue] = useState('');
     const [firstNameValue, setFirstNameValue] = useState('');
     const [lastNameValue, setLastNameValue] = useState('');
     const [companyNameValue, setCompanyNameValue] = useState('');
@@ -28,6 +29,7 @@ const SetPortfolio = () => {
     
     
     const formData = new FormData();
+    formData.append("name",nameValue);
     formData.append("first_name_eng", firstNameValue);
     formData.append("last_name_eng",lastNameValue);
     formData.append("company_name", companyNameValue);

@@ -12,6 +12,7 @@ import Dashboard from './pages/Layout/DashBoard'
 import PurchaseSteps from './pages/PurchaseSteps'
 import ResetPassword from './pages/ResetPassword'
 import OrderPOrtfolio from './pages/test'
+import SetPortfolio from './pages/SetPortfolio'
 import UserInfo from './components/DashboardComponents/UserInfo'
 import axios from 'axios'
 
@@ -70,6 +71,7 @@ function App() {
         <Route path="/ordering" element={<OrderPOrtfolio/>}/>
         <Route path="/editing-information" element={<ResetUserInformation/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/set-Portfolio" element={<SetPortfolio/>}/>
     </Routes>
     </BrowserRouter>
     </>

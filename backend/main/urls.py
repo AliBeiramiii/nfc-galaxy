@@ -9,8 +9,6 @@ urlpatterns = [
     path('customer/dashboard/',views.get_portfolio_fields),
     
 #     path('customer/order-portfoio/',views.),
-    
-    path('customer/change_info/',views.customer_change_info, name='customer-edit-info'),
 
     path('customer/reset-password/',views.customer_reset_password, name='customer-reset-password'),
     
@@ -32,6 +30,7 @@ urlpatterns = [
      
      path('homepage/', views.get_profile),
      
-     path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout')
+     path('customer/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='logout'),
     
+     path('set-portfolio/', views.set_portfolio_fields),
 ]

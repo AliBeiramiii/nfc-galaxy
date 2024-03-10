@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useEffect} from 'react'
+import { BrowserRouter, Route, Routes} from 'react-router-dom'
 import Layout from './pages/Layout'
 import HomePage from './pages/HomePage'
 import AboutUs from './pages/AboutUs'
@@ -20,8 +18,37 @@ import axios from 'axios'
 
 
 
+
 function App() {
 
+  useEffect(()=>{
+    const refreshToken = localStorage.getItem('refresh');
+    const checkUserStatus = async () => {
+      axios({
+        method: 'post',
+        url:'http://127.0.0.1:8000/api/token/refresh/',
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        data:{
+          'refresh' : refreshToken
+        }
+      }).then((secondResponse)=>{
+        console.log(secondResponse)
+        localStorage.setItem('access',secondResponse.data?.access)
+      }).catch((error)=>{
+        console.log(error);
+        if(error.response.status==401){
+         localStorage.removeItem('refresh');
+         localStorage.removeItem('access');
+         localStorage.removeItem('firstname');
+        }
+      })
+    };
+    if(refreshToken){
+      checkUserStatus();
+    }  
+  },[])
   return (
     <>
       <BrowserRouter>
@@ -36,6 +63,9 @@ function App() {
         <Route path="my-account/" element={<Dashboard/>}>
           <Route index element={<UserInfo/>}/>  
         </Route>
+        <Route path="product/NFC-Redesign-Card" element={<></>}/>
+        <Route path="product/NFC-Base-Card" element={<></>}/>
+        <Route path="product/NFC-Graphical-Card" element={<></>}/>
       </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/ordering" element={<OrderPOrtfolio/>}/>

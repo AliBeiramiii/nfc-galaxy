@@ -43,6 +43,7 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @csrf_exempt
 def order(request):
+    user = request.user
     first_name = request.POST.get('first_name_eng')
     last_name = request.POST.get('last_name_eng')
     company_name = request.POST.get('company_name')
@@ -287,7 +288,6 @@ def customer_reset_password(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_portfolio_fields(username):
-    # model_fields = models.Portfolio._meta.get_fields()
     user = User.objects.get(username=username)
     model_instance = models.Portfolio.objects.filter(user=user)
     serializer_class= serializer.PortfolioSerializer(model_instance, many=True)

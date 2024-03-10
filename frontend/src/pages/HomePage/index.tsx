@@ -1,5 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
-import Navbar from "../../components/Navbar";
+import React, { useState } from "react";
 import blackCard1 from "../../assets/BlackNfcCard1.png";
 import { GrList } from "react-icons/gr";
 import { FaCircle } from "react-icons/fa";
@@ -10,11 +9,12 @@ import RedNfcCards1 from "../../assets/RedNfcCards1.png";
 import BlueNfcCards1 from "../../assets/BlueNfcCards1.png";
 import ImageGallery from "react-image-gallery";
 import Footer from "../../components/Footer";
-import AuthContext, { useAuth } from "../../context-Api/AuthProvider";
+import ProductCard from "../../components/ProductCard";
+import BlackBaseNfcCard from "../../assets/BlackBaseNfcCards.jpg";
+import BlackGraphicalNfcCard from "../../assets/BlackGraphicalNfcCards.jpg";
+import GrayRedesignNfcCard from "../../assets/GrayRedesignNfcCards.jpg";
 
 const HomePage: React.FC = () => {
-  const imgRef = useRef<ImageGallery>(null);
-  const {authData, setAuthData} = useAuth();
   const images = [
     {
       original: BlackNfcCards1,
@@ -37,7 +37,7 @@ const HomePage: React.FC = () => {
   };
   return (
     <div className=" bg-white flex flex-col gap-4 h-screen">
-      <div className=" bg-gradient-to-b from-black via-gray-900 to-gray-900 flex flex-col justify-center gap-14 h-[480px] border rounded-b-[60px]">
+      <div className=" bg-gradient-to-b from-black via-gray-900 to-gray-900 flex flex-col justify-center gap-14 h-[480px] border rounded-b-[60px] mt-[100px]">
         <div className="flex flex-row justify-center gap-60">
           <img
             className="min-w-fit h-[380px] mt-[90px]"
@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
           </div>
           <NavLink
             to="/about-us"
-            className="flex justify-end pl-40 gap-5 mt-[10px] hover:pl-[250px] text-gray-900"
+            className="flex justify-end pl-40 gap-5 mt-[10px] hover:pl-[150px] text-gray-900"
           >
             <div className="text-center font-normal text-xl">بیشتر بخوانید</div>
             <div className="pt-1 mr-[-10px]">
@@ -169,16 +169,35 @@ const HomePage: React.FC = () => {
       </div>
       <div className=" bg-[#303030] flex justify-center gap-14 min-h-[680px] mt-8 border border-hidden rounded-t-[60px]">
         <div className="flex flex-col justify-between text-white">
-          <div>
-          <div className="text-center font-normal text-6xl pt-10 pb-5">
-            محصولات
+          <div className="flex flex-col justify-start gap-5">
+            <div className="text-center font-normal text-6xl pt-10 pb-5 underline underline-offset-[20px]">
+              محصولات
+            </div>
+            <div className="flex justify-between gap-5">
+              <ProductCard
+                imageUrl={BlackGraphicalNfcCard}
+                dirUrl="product/NFC-Graphical-Card"
+                price={"1,000,000"}
+                productName="کارت ویزیت ان اف سی گرافیکی"
+              />
+              <ProductCard
+                imageUrl={GrayRedesignNfcCard}
+                dirUrl="product/NFC-Redesign-Card"
+                price={"1,200,000"}
+                productName="کارت ویزیت ان اف سی (طراحی دوباره کارت ویزیت آماده شما)"
+              />
+              <ProductCard
+                imageUrl={BlackBaseNfcCard}
+                dirUrl="product/NFC-Base-Card"
+                price={"450,000"}
+                productName="کارت ویزیت ان اف سی Base"
+              />
+            </div>
           </div>
-          <div className="flex self-center bg-white w-[330px] h-[2px]"></div>
         </div>
-          </div>
         <div className=""></div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

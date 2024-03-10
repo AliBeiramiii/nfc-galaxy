@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../context-Api/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const UserInfo:React.FC = () => {
-  const{authData} = useAuth();
   const navigate = useNavigate();
   const [number,setNumber] = useState();
 

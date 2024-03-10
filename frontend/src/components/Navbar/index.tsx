@@ -1,8 +1,5 @@
-import React, { useState, useEffect} from "react";
+import React, { useState} from "react";
 import {
-  AiFillLinkedin,
-  AiOutlineMail,
-  AiOutlineGithub,
   AiOutlineMenu,
   AiOutlineClose,
 } from "react-icons/ai";
@@ -11,17 +8,11 @@ import { SiInstagram } from "react-icons/si";
 import { ImYoutube } from "react-icons/im";
 import WebsiteLogo from "../../assets/WebsiteLogo.png";
 import { NavLink, useLocation } from "react-router-dom";
-import { useAuth } from "../../context-Api/AuthProvider";
 
-interface NavbarProps {
-  handleNavigation: (sectionId: string) => void;
-}
 
-const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
+const Navbar: React.FC= () => {
   const [nav, setNav] = useState(false);
   const location = useLocation();
-  const [activeSection, setActiveSection] = useState<string>("home");
-  const {authData} = useAuth();
 
   const handleNav = () => {
     setNav(!nav);
@@ -37,10 +28,10 @@ const Navbar: React.FC<NavbarProps> = ({ handleNavigation }) => {
   };
   return (
     <div className="z-50 relative">
-      <div className="hidden md:flex mb-[100px]">
+      <div className="hidden md:flex mb-[100px] absolute">
         <div className="fixed bg-white w-screen h-[86px] text-bold text-black text-xl flex flex-row justify-evenly pl-8 p-3 gap-5">
           <NavLink to="/" className="mt-1">
-            <img className="min-w-fit h-[46px] mt-2" src={WebsiteLogo} alt="Me!" />
+            <img className="min-w-fit h-[46px] mt-2" src={WebsiteLogo} alt="NFC-Galaxy" />
           </NavLink>
           <ul className="flex justify-end flex-row items-center pl-5 gap-8 mt-2">
             <li className="h-[50px]">

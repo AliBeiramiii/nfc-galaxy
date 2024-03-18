@@ -5,7 +5,7 @@ import BlackGraphicalNfcCard from "../../assets/BlackGraphicalNfcCards.jpg";
 import GrayRedesignNfcCard from "../../assets/GrayRedesignNfcCards.jpg";
 import Footer from "../../components/Footer";
 
-const Products = () => {
+const Shop = () => {
   return (
     <>
     <div className="h-screen justify-between flex flex-col">
@@ -19,19 +19,19 @@ const Products = () => {
         <div className="flex gap-10 justify-center">
           <ProductCard
             imageUrl={BlackGraphicalNfcCard}
-            dirUrl="product/NFC-Graphical-Card"
+            dirUrl="/product/NFC-Graphical-Card"
             price={"1,000,000"}
             productName="کارت ویزیت ان اف سی گرافیکی"
           />
           <ProductCard
             imageUrl={GrayRedesignNfcCard}
-            dirUrl="product/NFC-Redesign-Card"
+            dirUrl="/product/NFC-Redesign-Card"
             price={"1,200,000"}
             productName="کارت ویزیت ان اف سی (طراحی دوباره کارت ویزیت آماده شما)"
           />
           <ProductCard
             imageUrl={BlackBaseNfcCard}
-            dirUrl="product/NFC-Base-Card"
+            dirUrl="/product/NFC-Base-Card"
             price={"450,000"}
             productName="کارت ویزیت ان اف سی Base"
           />
@@ -44,4 +44,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Shop;

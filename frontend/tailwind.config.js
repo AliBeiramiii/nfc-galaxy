@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors:{
-        'txtCol':'#7A7A7A'
+        'txtCol':'#7A7A7A',
+        'txtCol2' : '#272626'
       }
     },
   },

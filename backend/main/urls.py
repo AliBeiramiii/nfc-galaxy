@@ -6,10 +6,6 @@ from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     
-#     path('customer/dashboard/',views.get_portfolio_fields),
-    
-#     path('customer/order-portfoio/',views.),
-
     path('customer/reset-password/',views.customer_reset_password, name='customer-reset-password'),
     
     path('customer/login/',views.customer_login, name='customer_login'),
